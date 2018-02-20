@@ -1,3 +1,4 @@
 from django.contrib import admin
+from webapp.models import Repo
 
-# Register your models here.
+admin.site.register(Repo)
