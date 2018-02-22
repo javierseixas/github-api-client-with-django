@@ -1,14 +1,13 @@
 from requests import *
+from .serializers import RepoSerializer
 
 
 def get_repos():
     url = 'https://api.github.com/users/githubtraining/repos'
-    params = {'per_page': 2}
-    print('IM HERE ----------------------')
-    r = get(url, params=params)
-    repos = r.json()
-    repos_list = {'repos':repos}
+    params = {}
+    response = get(url, params=params)
+    serializer = RepoSerializer(data=response.json(), many=True)
+    serializer.is_valid()
+    repos = serializer.validated_data
 
-    print(repos_list)
-
-    return repos_list
+    return {'repos': repos}
