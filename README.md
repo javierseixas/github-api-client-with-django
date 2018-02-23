@@ -1,5 +1,7 @@
 # Building a Github api client with django
 
+[![Build Status](https://travis-ci.org/javierseixas/github-api-client-with-django.svg?branch=master)](https://travis-ci.org/javierseixas/github-api-client-with-django)
+
 ## Run the application
 
 
@@ -19,17 +21,24 @@ Visit `http://localhost:8000` for overview the app.
 **NOTE**: Be sure the port 8000 is not being used in your system.
 
 
+## Solution explanations
+
+* I've used lambdas for Searcher algorithm
+
+* DB caching should be implement using events for decoupling reasons
+* Is not possible to invert order
+* Ordering for results returned from cache are not ordered
+
+## Tests
+
 ## Support
 
 * [For configuring Pycharm with Docker](https://www.jetbrains.com/help/pycharm/configuring-remote-interpreter-via-dockercompose.html)
 
 ## TODO
 
-* Switch direction of ordering
-    * Maintain querystrings in order options
 * Execute migrations, in docker?
 * Travis
 * Scenarios with api failing so cache is demostrated
-* Handling errors
 * Tests
 * Pass a PEP8 corrector
