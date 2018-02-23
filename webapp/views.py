@@ -12,5 +12,12 @@ def list(request):
 
 
 def with_api(request):
-    repos = services.get_repos()
+    orderby = request.GET.get('orderby', 'name')
+    repos = services.get_repos(orderby=orderby)
+    return render(request, 'webapp/repos.html', repos)
+
+
+def search(request):
+    term = request.GET.get('search', 'name')
+    repos = services.get_repos(search)
     return render(request, 'webapp/repos.html', repos)

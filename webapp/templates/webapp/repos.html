@@ -3,6 +3,12 @@
 {% block content %}
 <p>Welcome to the list</p>
 
+    <p><a href="/repos">order by name</a> | <a href="/repos?orderby=created">order by created</a> <a href="/repos?orderby=created&direction=asc">x</a> | <a href="/repos?orderby=pushed">order by pushed</a></p>
+
+    <form method="get" action="/repos/">
+        <p><input type="text" name="term" /> <input type="button" name="search" value="Buscar" /></p>
+    </form>
+
     {% for repo in repos %}
         <p>{{ repo.name }} , {{ repo.created_at|date:"d-m-Y" }} , {{ repo.pushed_at|date:"d-m-Y" }}</p>
     {% endfor %}
