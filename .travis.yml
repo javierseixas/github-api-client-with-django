@@ -1,0 +1,40 @@
+language: python
+
+python:
+  - 2.7
+  - 3.6
+
+services: postgresql
+
+env:
+  global:
+  - DJANGO_SETTINGS_MODULE="djangogithubapiclient.settings"
+  - PYTHONPATH="/home/travis/build/javierseixas/github-api-client-with-django"
+  - PIP_USE_MIRRORS=true
+# Last two for OS X, courtesy of stackoverflow.com/a/22697917/419005
+# - CFLAGS=-Qunused-arguments
+# - CPPFLAGS=-Qunused-arguments
+
+install:
+  - pip install -r requirements.txt
+  - pip install coveralls radon
+
+before_script:
+  - psql -c "CREATE DATABASE travisdb;" -U postgres
+
+script:
+  - sh build.sh
+
+after_success:
+- pip freeze
+- echo Uploading code coverage data ...; coveralls
+- echo Code complexity scores:; radon cc --min B ../github-api-client-with-django
+
+notifications:
+  email:
+    on_success: change
+    # on_failure: always
+
+# matrix:
+#   allow_failures:
+#     - python: 3.3
