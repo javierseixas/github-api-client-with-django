@@ -1,6 +1,6 @@
 from requests import *
 from .serializers import RepoSerializer
-from .models import Stats
+from .models import Stats, Repo
 from datetime import datetime
 
 
@@ -50,3 +50,22 @@ class Searcher(object):
 
     def search(self, repos, term):
         return list(filter(lambda repo: term in repo['name'], repos))
+
+
+class Cacher(object):
+    elements_count = 10
+
+    def record_repos_in_cache(self, repos):
+        self._remove_old_cached_elements()
+
+        for repo in repos[:self.elements_count]:
+            repo_model = RepoMapper().convert_from_object_to_model(repo)
+            repo_model.save(force_insert=True)
+
+    def _remove_old_cached_elements(self):
+        Repo.objects.all().delete()
+
+
+class RepoMapper(object):
+    def convert_from_object_to_model(self, repo):
+        return Repo(repo['name'], repo['created_at'], repo['pushed_at'])
