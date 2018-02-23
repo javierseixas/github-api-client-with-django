@@ -6,5 +6,5 @@ from . import views
 
 urlpatterns = [
     url(r'^$', ListView.as_view(queryset=Repo.objects.all().order_by("-name")[:25], template_name='webapp/home.html')),
-    url(r'^repos/', views.with_api),
+    url(r'^repos/', views.list),
 ]

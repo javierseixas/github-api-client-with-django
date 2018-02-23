@@ -8,9 +8,7 @@ def get_repos(orderby='full_name', direction=None):
     response = get(url, params=params)
     serializer = RepoSerializer(data=response.json(), many=True)
     serializer.is_valid()
-    repos = serializer.validated_data
-
-    return {'repos': repos}
+    return serializer.validated_data
 
 
 def search_repos():
