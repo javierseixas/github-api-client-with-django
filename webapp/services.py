@@ -27,3 +27,9 @@ def _build_params(orderby, direction):
         params['direction'] = direction
 
     return params
+
+
+class Searcher(object):
+
+    def search(self, repos, term):
+        return list(filter(lambda repo: term in repo['name'], repos))
