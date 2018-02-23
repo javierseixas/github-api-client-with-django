@@ -1,7 +1,7 @@
 from django.shortcuts import render
-from . import services
-from .forms import SearchRepoForm
 from django.views.generic import View
+from .services import GithubApiClient
+from .forms import SearchRepoForm
 
 
 class ReposView(View):
@@ -10,7 +10,7 @@ class ReposView(View):
     def get(self, request):
         search_form = SearchRepoForm()
         orderby = request.GET.get('orderby', 'name')
-        repos = services.get_repos(orderby=orderby)
+        repos = GithubApiClient().get_repos(orderby=orderby)
 
         return render(request, self.template_name, {'repos': repos, 'search_form': search_form})
 
@@ -21,7 +21,7 @@ class SearchView(View):
     def get(self, request):
         search_form = SearchRepoForm()
         term = request.GET.get('term', '')
-        repos = services.search_repos(term)
+        repos = GithubApiClient().search_repos(term)
 
         return render(request, self.template_name, {
             'repos': repos,
