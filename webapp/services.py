@@ -10,14 +10,17 @@ def get_repos(orderby='full_name', direction=None):
     serializer.is_valid()
     return serializer.validated_data
 
+# TODO Refactor duplicated code
+def search_repos(term):
+    url = 'https://api.github.com/users/githubtraining/repos'
+    params = {}
+    response = get(url, params=params)
+    serializer = RepoSerializer(data=response.json(), many=True)
+    serializer.is_valid()
+    repos = serializer.validated_data
 
-def search_repos():
-    pass
-
-    # Recover all repos
-    # process repos to find per name
-    # reponse the found repos
-
+    filtered_repos = Searcher().search(repos, term)
+    return filtered_repos
 
 def _build_params(orderby, direction):
     params = {}

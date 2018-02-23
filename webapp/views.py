@@ -16,6 +16,11 @@ def list(request):
 
 
 def search(request):
-    term = request.GET.get('search', 'name')
-    repos = services.get_repos(search)
-    return render(request, 'webapp/repos.html', {'repos': repos})
+    search_form = SearchRepoForm()
+    term = request.GET.get('term', '')
+    repos = services.search_repos(term)
+    return render(request, 'webapp/repos.html', {
+        'repos': repos,
+        'search_form': search_form,
+        'searched_term': term
+    })

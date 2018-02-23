@@ -5,9 +5,9 @@
 
     <p><a href="/repos">order by name</a> | <a href="/repos?orderby=created">order by created</a> <a href="/repos?orderby=created&direction=asc">x</a> | <a href="/repos?orderby=pushed">order by pushed</a></p>
 
-    <form method="get" action="/repos/">
+    <form method="get" action="/repos/search">
         {{ search_form.as_p }}
-        <p><input type="button" name="search" value="Search" /></p>
+        <p><input type="submit" name="search" value="Search" /></p>
     </form>
 
     {% for repo in repos %}
