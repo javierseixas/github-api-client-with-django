@@ -69,3 +69,6 @@ class Cacher(object):
 class RepoMapper(object):
     def convert_from_object_to_model(self, repo):
         return Repo(repo['name'], repo['created_at'], repo['pushed_at'])
+
+    def convert_from_model_to_object(self, repo):
+        return {'name': repo.name, 'created_at': repo.creation_datetime, 'pushed_at': repo.update_datetime}
