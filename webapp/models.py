@@ -8,3 +8,11 @@ class Repo(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Stats(models.Model):
+    name = models.CharField(primary_key=True, max_length=30)
+    value = models.TextField()
+
+    def __str__(self):
+        return self.name

@@ -1,5 +1,7 @@
 from requests import *
 from .serializers import RepoSerializer
+from .models import Stats
+from datetime import datetime
 
 
 class GithubApiClient(object):
@@ -11,6 +13,9 @@ class GithubApiClient(object):
         response = get(self.url, params=params)
         serializer = RepoSerializer(data=response.json(), many=True)
         serializer.is_valid()
+
+        self._persist_last_visit()
+
         return serializer.validated_data
 
     def search_repos(self, term):
@@ -18,6 +23,8 @@ class GithubApiClient(object):
         serializer = RepoSerializer(data=response.json(), many=True)
         serializer.is_valid()
         repos = serializer.validated_data
+
+        self._persist_last_visit()
 
         matched_repos = Searcher().search(repos, term)
         return matched_repos
@@ -30,6 +37,13 @@ class GithubApiClient(object):
             params['direction'] = direction
 
         return params
+
+    def _persist_last_visit(self):
+        record_visit = Stats(name='last_api_request', value=datetime.now())
+        try:
+            record_visit.save(force_update=True)
+        except:
+            record_visit.save(force_insert=True)
 
 
 class Searcher(object):
