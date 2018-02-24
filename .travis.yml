@@ -17,18 +17,17 @@ env:
 
 install:
   - pip install -r requirements.txt
-  - pip install coveralls radon
+  - pip install coveralls
 
 before_script:
   - psql -c "CREATE DATABASE travisdb;" -U postgres
 
 script:
-  - sh build.sh
+  - coverage run --source=webapp manage.py test
 
 after_success:
 - pip freeze
-- echo Uploading code coverage data ...; coveralls
-- echo Code complexity scores:; radon cc --min B ../github-api-client-with-django
+- coveralls
 
 notifications:
   email:
