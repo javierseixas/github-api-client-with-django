@@ -1,6 +1,7 @@
 # Building a Github api client with django
 
 [![Build Status](https://travis-ci.org/javierseixas/github-api-client-with-django.svg?branch=master)](https://travis-ci.org/javierseixas/github-api-client-with-django)
+[![Coverage Status](https://coveralls.io/repos/github/javierseixas/github-api-client-with-django/badge.svg?branch=master)](https://coveralls.io/github/javierseixas/github-api-client-with-django?branch=master)
 
 ## Run the application
 
@@ -38,7 +39,7 @@ Visit `http://localhost:8000` for overview the app.
 ## TODO
 
 * Execute migrations, in docker?
-* Travis
 * Scenarios with api failing so cache is demostrated
 * Tests
+* Coverage
 * Pass a PEP8 corrector
