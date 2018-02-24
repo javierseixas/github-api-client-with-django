@@ -53,7 +53,11 @@ class Searcher(object):
 
 
 class Cacher(object):
-    elements_count = 10
+
+    NUMBER_ELEMENTS_TO_SAVE = 10
+
+    def __init__(self, mapper):
+        self.mapper = mapper
 
     def record_repos_in_cache(self, repos):
 
@@ -62,8 +66,8 @@ class Cacher(object):
 
         self._remove_old_cached_elements()
 
-        for repo in repos[:self.elements_count]:
-            repo_model = RepoMapper().convert_from_object_to_model(repo)
+        for repo in repos[:self.NUMBER_ELEMENTS_TO_SAVE]:
+            repo_model = self.mapper.convert_from_object_to_model(repo)
             repo_model.save(force_insert=True)
 
     def _remove_old_cached_elements(self):
