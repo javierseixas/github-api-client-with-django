@@ -56,6 +56,10 @@ class Cacher(object):
     elements_count = 10
 
     def record_repos_in_cache(self, repos):
+
+        if not repos:
+            return
+
         self._remove_old_cached_elements()
 
         for repo in repos[:self.elements_count]:
