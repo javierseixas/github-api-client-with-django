@@ -94,7 +94,7 @@ if 'TRAVIS' in os.environ:
             'HOST':     'localhost',
             'PORT':     '',
         }
-}
+    }
 
 
 # Password validation
