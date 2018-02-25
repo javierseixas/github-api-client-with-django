@@ -23,7 +23,7 @@ class ReposView(View):
 
 
 class SearchView(View):
-    template_name = 'webapp/repos.html'
+    template_name = 'webapp/search_results.html'
 
     def get(self, request):
         search_form = SearchRepoForm()
@@ -33,5 +33,6 @@ class SearchView(View):
         return render(request, self.template_name, {
             'repos': repos,
             'search_form': search_form,
-            'searched_term': term
+            'searched_term': term,
+            'flag_back_to_list': True,
         })

@@ -1,0 +1,7 @@
+{% for repo in repos %}
+    <tr>
+      <th scope="row">{{ repo.name }}</th>
+      <td>{{ repo.created_at|date:"d/m/Y" }}</td>
+      <td>{{ repo.pushed_at|date:"d/m/Y" }}</td>
+    </tr>
+{% endfor %}

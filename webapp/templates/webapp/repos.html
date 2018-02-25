@@ -10,19 +10,13 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th scope="col"><a href="/repos">Name</a></th>
-                        <th scope="col"><a href="/repos?orderby=created">Creation date</a></th>
-                        <th scope="col"><a href="/repos?orderby=pushed">Last commit date</a></th>
+                        <th scope="col"><a href="/repos">Name <span class="oi oi-arrow-top"></span></a></th>
+                        <th scope="col"><a href="/repos?orderby=created">Creation date <span class="oi oi-arrow-bottom"></span></a></th>
+                        <th scope="col"><a href="/repos?orderby=pushed">Last commit date <span class="oi oi-arrow-bottom"></span></a></th>
                     </tr>
                 </thead>
 
-                {% for repo in repos %}
-                <tr>
-                  <th scope="row">{{ repo.name }}</th>
-                  <td>{{ repo.created_at|date:"d/m/Y" }}</td>
-                  <td>{{ repo.pushed_at|date:"d/m/Y" }}</td>
-                </tr>
-                {% endfor %}
+                {% include 'webapp/includes/repos_rows.html' %}
 
               </tbody>
             </table>
