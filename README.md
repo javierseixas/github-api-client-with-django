@@ -5,9 +5,9 @@
 
 ## Run the application
 
+You can run the application with docker or without it. In the last case, you'll need a postgres db up. In both cases, you can visit the site at [localhost:8000](http://localhost:8000).
 
-
-### Running with Docker
+### Running with Docker (Recommendable)
 
 Execute the command below to start the application and its dependencies:
 
@@ -15,19 +15,36 @@ Execute the command below to start the application and its dependencies:
 docker-compose up
 ```
 
-Visit `http://localhost:8000` for overview the app.
+Visit [localhost:8000](http://localhost:8000) for overview the app.
 
 [This tutorial](https://docs.docker.com/compose/django) from Docker was followed to set up the environment.
 
 **NOTE**: Be sure the port 8000 is not being used in your system.
 
 
+### Running WITHOUT Docker
+
+Make sure you have a postgres database. You'll probably need to change [database default config](https://github.com/javierseixas/github-api-client-with-django/blob/master/djangogithubapiclient/settings.py#L78).
+
+Run the command below:
+
+```
+./bin/run.sh
+```
+
+Visit [localhost:8000](http://localhost:8000) for overview the app.
+
+
 ## Solution explanations
 
-* I've used lambdas for Searcher algorithm
+### Other design explanations
 
-* DB caching should be implement using events for decoupling reasons
-* Is not possible to invert order
+* I've used lambdas for Searcher algorithm
+* DB caching should be implement using events for decoupling reasons. This exists 
+
+### Features NOT implemented
+
+* Is not possible to invert order in list
 * Ordering for results returned from cache are not ordered
 
 ## Tests
@@ -41,5 +58,4 @@ Visit `http://localhost:8000` for overview the app.
 * Execute migrations, in docker?
 * Scenarios with api failing so cache is demostrated
 * Tests
-* Coverage
 * Pass a PEP8 corrector
