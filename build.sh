@@ -6,6 +6,6 @@
 # Requires that a postgreSQL database has been created for the application
 #
 set -e # stops execution on error
-rm -rf forum/migrations
+rm -rf webapp/migrations
 python manage.py migrate
 python manage.py test
