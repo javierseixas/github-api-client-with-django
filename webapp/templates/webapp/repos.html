@@ -1,16 +1,32 @@
 {% extends "webapp/layout.html" %}
 
 {% block content %}
-<p>Welcome to the list</p>
 
-    <p><a href="/repos">order by name</a> | <a href="/repos?orderby=created">order by created</a> <a href="/repos?orderby=created&direction=asc">x</a> | <a href="/repos?orderby=pushed">order by pushed</a></p>
+    {% include 'webapp/includes/searcher.html' %}
 
-    <form method="get" action="/repos/search">
-        {{ search_form.as_p }}
-        <p><input type="submit" name="search" value="Search" /></p>
-    </form>
+    <div class="row">
+        <div class="col-sm">
 
-    {% for repo in repos %}
-        <p>{{ repo.name }} , {{ repo.created_at|date:"d-m-Y" }} , {{ repo.pushed_at|date:"d-m-Y" }}</p>
-    {% endfor %}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col"><a href="/repos">Name</a></th>
+                        <th scope="col"><a href="/repos?orderby=created">Creation date</a></th>
+                        <th scope="col"><a href="/repos?orderby=pushed">Last commit date</a></th>
+                    </tr>
+                </thead>
+
+                {% for repo in repos %}
+                <tr>
+                  <th scope="row">{{ repo.name }}</th>
+                  <td>{{ repo.created_at|date:"d/m/Y" }}</td>
+                  <td>{{ repo.pushed_at|date:"d/m/Y" }}</td>
+                </tr>
+                {% endfor %}
+
+              </tbody>
+            </table>
+
+        </div>
+    </div>
 {% endblock %}
