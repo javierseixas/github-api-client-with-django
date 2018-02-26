@@ -1,7 +1,7 @@
 from django.test import TestCase
 from webapp.services import Searcher, RepoMapper, Cacher
 from .models import Repo
-from mock import Mock, patch
+from unittest.mock import Mock, patch
 
 
 class SearcherTestCase(TestCase):
@@ -63,17 +63,35 @@ class RepoMapperTestCase(TestCase):
 class CacherTestCase(TestCase):
 
     def setUp(self):
-        mapperMock = mock()
-        self.cacher = Cacher()
+        self.mapperMock = Mock()
+        mocked_repos = [
+            Repo('test_repo_1', '2006-10-25 14:30:59.000200', '2006-10-25 14:30:59.000200'),
+            Repo('test_repo_2', '2006-10-25 14:30:59.000200', '2006-10-25 14:30:59.000200'),
+            Repo('test_repo_3', '2006-10-25 14:30:59.000200', '2006-10-25 14:30:59.000200'),
+        ]
+        self.mapperMock.convert_from_object_to_model = Mock(side_effect=mocked_repos)
+        self.cacher = Cacher(self.mapperMock)
 
-    def test_should_delete_and_record_repos(self):
-
+    def test_should_delete_caches_if_api_returns_repos_and_save_repos(self):
         repos = [
             {'name': 'test_repo_1', 'created_at': '20180224T184221Z', 'pushed_at': '20180224T184221Z'},
             {'name': 'test_repo_2', 'created_at': '20180224T184221Z', 'pushed_at': '20180224T184221Z'},
             {'name': 'test_repo_3', 'created_at': '20180224T184221Z', 'pushed_at': '20180224T184221Z'},
         ]
 
-        self.cacher.record_repos_in_cache(repos)
+        with patch.object(self.cacher, '_remove_old_cached_elements',
+                          wraps=self.cacher._remove_old_cached_elements) as spy:
+            self.cacher.record_repos_in_cache(repos)
 
-        self.assert()
+            self.assertEqual(spy.call_count, 1)
+
+        self.mapperMock.has_calls(3, True)
+
+    def test_should_not_delete_cache_if_no_repos_come_from_the_api(self):
+        repos = []
+
+        with patch.object(self.cacher, '_remove_old_cached_elements',
+                          wraps=self.cacher._remove_old_cached_elements) as spy:
+            self.cacher.record_repos_in_cache(repos)
+
+            self.assertEqual(spy.call_count, 0)
