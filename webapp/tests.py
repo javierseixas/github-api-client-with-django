@@ -1,5 +1,5 @@
 from django.test import TestCase
-from webapp.services import Searcher, RepoMapper, Cacher
+from webapp.services import Searcher, RepoMapper, Cacher, GithubApiClient
 from .models import Repo
 from unittest.mock import Mock, patch
 
@@ -95,3 +95,31 @@ class CacherTestCase(TestCase):
             self.cacher.record_repos_in_cache(repos)
 
             self.assertEqual(spy.call_count, 0)
+
+
+# class GithubApiClientTestCase(TestCase):
+#
+#     def setUp(self):
+#         self.client = GithubApiClient()
+#
+#     @patch('webapp.services.requests')
+#     def test_should_call_github_api(self, mock_requests):
+#
+#         self.client.get_repos("whatever")
+#
+#         self.assertTrue(mock_requests.get.called, "Fail doing get request")
+#
+#         with patch.object(self.client, '_persist_last_visit',
+#                           wraps=self.client._persist_last_visit) as spy:
+#             self.assertEqual(spy.call_count, 1)
+
+    # @patch('webapp.services.requests')
+    # def test_should_call_github_api(self, mock_requests):
+    #
+    #     self.client.search_repos("whatever")
+    #
+    #     self.assertTrue(mock_requests.get.called, "Fail doing get request")
+    #
+    #     with patch.object(self.client, '_persist_last_visit',
+    #                       wraps=self.client._persist_last_visit) as spy:
+    #         self.assertEqual(spy.call_count, 1)

@@ -19,8 +19,6 @@ Visit [localhost:8000](http://localhost:8000) for overview the app.
 
 [This tutorial](https://docs.docker.com/compose/django) from Docker was followed to set up the environment.
 
-**NOTE**: Be sure the port 8000 is not being used in your system.
-
 
 ### Running WITHOUT Docker
 
@@ -44,7 +42,7 @@ Visit [localhost:8000](http://localhost:8000) for overview the app.
     * Stats: Is a table with a unique row where is stored the last request of the Api? The name of the stat is also the PK.
 * **PEP 8**: Passed Pycharm PEP 8 inspection. Only using bare `except` is warning.
 * **forms**: Only one form is used for the search feature.
-* **Unit tests**:
+* **Unit tests**: Implemented unit tests mainly for services.py. I assume test coverage can be improved.
 * **Coverage**: `coverage` library is used, and Coveralls service is applied for easy coverage report viewing [![Coverage Status](https://coveralls.io/repos/github/javierseixas/github-api-client-with-django/badge.svg?branch=master)](https://coveralls.io/github/javierseixas/github-api-client-with-django?branch=master)
 * **urls.py**: Two endpoints are implemented. One for each action of the user: List all repos, and search by name. Common templates and services are reused for each action.
 
@@ -72,11 +70,11 @@ Or without it:
 python3 manage.py test
 ```
 
+## Tech debt
+
+* Implements test for `views.py`
+* Create end to end tests
+
 ## Support
 
 * [For configuring Pycharm with Docker](https://www.jetbrains.com/help/pycharm/configuring-remote-interpreter-via-dockercompose.html)
-
-## TODO
-
-* Scenarios with api failing so cache is demostrated
-* Tests

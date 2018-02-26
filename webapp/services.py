@@ -1,6 +1,6 @@
-from requests import *
-from .serializers import RepoSerializer
-from .models import Stats, Repo
+import requests
+from webapp.serializers import RepoSerializer
+from webapp.models import Stats, Repo
 from datetime import datetime
 
 
@@ -10,7 +10,7 @@ class GithubApiClient(object):
 
     def get_repos(self, orderby='full_name', direction=None):
         params = self._build_params(orderby, direction)
-        response = get(self.url, params=params)
+        response = requests.get(self.url, params=params)
         serializer = RepoSerializer(data=response.json(), many=True)
         serializer.is_valid()
 
@@ -19,7 +19,7 @@ class GithubApiClient(object):
         return serializer.validated_data
 
     def search_repos(self, term):
-        response = get(self.url)
+        response = requests.get(self.url)
         serializer = RepoSerializer(data=response.json(), many=True)
         serializer.is_valid()
         repos = serializer.validated_data
